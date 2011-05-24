@@ -1,0 +1,83 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=3598
+
+Repository, Tutorial: https://github.com/jiangmiao/advancer-abbreviation
+
+Advancer Abbreviation
+=====================
+Advancer Abbreviation is a Vim plugin to create code snippet quickly
+
+Usage
+-----
+    Use Shortcut <C-CR> or <S-CR> to expand the abbreviation or jump to next placeholder.
+
+    <S-CR> : Smart Expand or jump to next placeholder.
+    <C-CR> : Force Expand or jump to next placeholder.
+    <ESC>  : If the line contain placeholder but now it is blank, 
+             then delete whole line and leave insert mode.
+
+Features
+--------
+*   Support any character except space as abbreviate name.
+*   Quick jump to next placeholder.
+*   Easy to extend.
+
+Installation
+------------
+    copy plugin/advancer-abbreviate.vim to ~/.vim/plugin
+
+Tutorial
+--------
+###Preparation
+    copy ftplugin-examples/* to ~/.vim/ftplugin
+
+    There are 5 examples include c, cpp, javascript, php, ruby
+    The abbreviation supported in example are
+
+        c          : for std main #i #ii
+        cpp        : for std main
+        javascript : for fu
+        ruby       : for def
+        php        : for
+
+    You could test the script with your favourite language.
+
+###example for edit C file
+    <C-CR> = Control+Return
+    |      = Cursor postion
+    $ gvim foo.c
+
+1
+
+    input: #i<C-CR>foo<C-CR>#ii<C-CR>bar<C-CR>
+    output:
+    #include <foo>
+    #include "bar"
+    |
+
+2
+
+    input: std<C-CR>
+    output:
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <string.h>
+
+    |
+
+Write Your Own Abbreviation
+---------------------------
+    Use Command Abbr
+    Usage: Abbr [name] [code]
+    Example:
+    Abbr for for (/*TODO*/; /*TODO*/; /*TODO*/) {<CR>/*TODO*/<CR>}<CR>/*TODO*/
+    Abbr #ii #include "/*TODO*/"<CR>
+
+    Abbreviate format is same as vim abbr. see help :abbr
+    but AdvAbbr has looser limition on name, it support any character as name except space.
+    eg: f.f is invalid name in vim abbr but valid in Advancer Abbreviation.
+    
+    TODO has four different formats
+    /*TODO*/, #TODO#, 'TODO', <!--TODO-->
+    choose them according to which language is using. 
+    for example, /*TODO*/ use for c, cpp, 'TODO' use for ruby
+
