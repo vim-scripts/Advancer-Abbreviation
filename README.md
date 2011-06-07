@@ -19,7 +19,7 @@ Usage
     <S-CR> : Smart Expand or jump to next placeholder.
     <C-CR> : Force Expand or jump to next placeholder.
     <ESC>  : If the line contain placeholder but now it is blank, 
-             then delete whole line when leave insert mode.
+             then delete whole line and leave insert mode.
 
 Options
 -------
@@ -59,8 +59,7 @@ Options
         au Syntax,WinEnter * AbbrInitSyntax
         au BufRead,BufNewFile * AbbrInitMapKeys
 
-        AbbrInitMapKeys MUST be invoked, or the no shortcuts will work.
-
+        AbbrInitMapKeys MUST be invoked, or the no shortcut will work.
 
     g:AbbrSplitPattern         
         Default: '[()\[\]{}]'
@@ -152,15 +151,6 @@ Write Your Own Abbreviation
     choose them according to which language is using. 
     for example, /*TODO*/ use for c, cpp, 'TODO' use for ruby
 
-
-    Non-Word character ()[]{}"' any space
-    foo.main EXPAND foo.main
-    foo,main EXPAND foo,main
-    foo, main EXPAND main
-    foo(main EXPAND main
-    I'm EXPAND I'm or m
-
-
 Map the expand and jump key
 ---------------------------
     If <C-CR> or <S-CR> is used in other way, add
@@ -168,7 +158,7 @@ Map the expand and jump key
     It will disable the ESC mapping too.
 
     map the expand and jump key to Meta-m(Alt-m)
-    inoremap <buffer> <silent> <M-m> <ESC>a<C-R>=AbbrJump()<CR>
+    inoremap <buffer> <silent> <M-m> <ESC>a<C-R>=AbbrSmartExpand()<CR>
     inoremap <buffer> <silent> <ESC> <C-O>:call AbbrClean()<CR><ESC>
 
 
@@ -176,9 +166,10 @@ TroubleShooting
 ---------------
 ###The plugin cannot work.
     1. Check if the key mapping is correct
-    use :imap <C-CR> to check
+    use :imap <S-CR> to check
     The correct output should be
-    i   <C-CR>    *@<ESC>a<C-R>=AbbrJump()<CR>
+    i   <S-CR>    *@<ESC>a<C-R>=AbbrSmartExpand()<CR>
+    if incorrect, invoke command :AbbrInitMapKeys<CR> to remap the keys.
 
     2. Check if terminal support the key
     Some terminal doesn't support <C-R>, Try remap the key to other.
